@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>News Cards Aligned</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column; /* Organizes content vertically */
+        align-items: center; /* Centers content horizontally */
+        padding: 20px;
+        background-color: #f4f4f4;
+        overflow: hidden;
+    }
+    .news-container {
+        display: flex;
+        justify-content: space-around; /* Evenly spaces the cards */
+        flex-wrap: wrap; /* Allows cards to wrap onto the next line */
+        width: 100%; /* Uses full width of the viewport */
+    }
+    .news-header {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        animation: changeColor 5s infinite alternate;
+    }
+    @keyframes changeColor {
+        0% { color: #7700cc; }
+        50% { color: #d97fce; }
+        100% { color: #7700cc; }
+    }
+    .news-card {
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        width: 280px; /* Fixed width */
+        margin: 20px; /* Spacing between cards */
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+        position: relative;
+    }
+    .news-title {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+        transition: transform 0.3s ease-in-out;
+    }
+    .news-title:hover {
+        transform: scale(1.1);
+    }
+    .like-button {
+        background-color: #7700cc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        margin-top: 10px;
+    }
+    .like-button:hover {
+        transform: scale(1.1);
+    }
+    .like-button:active {
+        transform: scale(0.9);
+    }
+    .thumbs-up {
+        position: absolute;
+        font-size: 24px;
+        opacity: 0;
+        animation: floatUp 4s ease-in-out forwards;
+        top: 50%;
+        left: 50%;
+    }
+    @keyframes floatUp {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -150px) scale(0);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+<h1 class="news-header">This week's specials</h1>
+<div class="news-container">
+    <div class="news-card fade-in">
+        <h2 class="news-title">Local News</h2>
+        <p>Discover the latest happenings in your area with our comprehensive local news coverage.</p>
+        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
+    </div>
+
+    <div class="news-card fade-in">
+        <h2 class="news-title">Makeup</h2>
+        <p>Get the latest updates and trends on global beauty events influencing the markets.</p>
+        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
+    </div>
+
+    <div class="news-card fade-in">
+        <h2 class="news-title">Fashion</h2>
+        <p>Explore new fashion innovations and their impact on our daily lives and future.</p>
+        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
+    </div>
+
+    <div class="news-card fade-in">
+        <h2 class="news-title">Celebrities Update</h2>
+        <p>Catch up on the latest gossips and highlights from your favorite celebrities and their teams.</p>
+        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        var cards = document.querySelectorAll('.fade-in');
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].style.opacity = 1;
+        }
+    };
+
+    function createFloatingIcon(button) {
+        const icon = document.createElement('div');
+        icon.classList.add('thumbs-up');
+        icon.textContent = '👍';
+        button.parentNode.appendChild(icon);
+
+        setTimeout(() => {
+            button.parentNode.removeChild(icon);
+        }, 4000);
+    }
+</script>
+
+</body>
+</html>
+
