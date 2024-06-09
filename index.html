@@ -1,142 +1,232 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css"/>
+    <title>Document</title>
+</head>
+<body>
+    <div class="header"> 
+        <h1>Pixel Palette</h1>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script>
+        const Engine = Matter.Engine;
+        const World = Matter.World;
+        const Bodies = Matter.Bodies;
+        const Body = Matter.Body;
+
+        let engine;
+        let items = [];
+        let lastMouseX = -1;
+        let lastMouseY = -1; 
+
+        function setup() {
+            createCanvas(window.innerWidth, window.innerHeight);
+            engine=Engine.create();
+            engine.world.gravity.y=0;
+
+            addBoundaries();
+            for (let i=0; i<12; i++){
+                let x= random (100, width -100);
+                let y=random (100, height -100);
+                items.push (new Item (x, y, `./images/main-${i+1}.jpg`));
+            }
+        }
+
+        function addBoundaries(){
+            const thickness = 50;
+            World.add(engine.world, [
+                Bodies.rectangle(width/2, -thickness / 2, width, thickness, {
+                    isStatic: true,
+
+                }),
+                Bodies.rectangle(width/2, height+thickness / 2, width, thickness, {
+                    isStatic: true,
+
+                }),
+                Bodies.rectangle(-thickness/2, height / 2, thickness, height, {
+                    isStatic: true,
+
+                }),
+                Bodies.rectangle(width + thickness/2, height / 2, thickness, height, {
+                    isStatic: true,
+
+                }),
+            ]);
+        }
+
+        function draw(){
+            background("black");
+            Engine.update(engine);
+            items.forEach((item) => item.update());
+        }
+
+        class Item {
+            constructor (x, y, imagePath){
+                let options ={
+                    frictionAir: 0.075,
+                    restitution: 0.25,
+                    density: 0.002,
+                    angle: Math.random()*Math.PI*2,
+
+                };
+
+                this.body = Bodies.rectangle(x, y, 100, 200, options);
+                World.add (engine.world, this.body);
+
+                this.div = document.createElement("div");
+                this.div.className = "item";
+                this.div.style.left=`${this.body.position.x - 50}px`;
+                this.div.style.top=`${this.body.position.y - 100}px`;
+                const img = document.createElement("img");
+                img.src = imagePath;
+                this.div.appendChild(img);
+                document.body.appendChild(this.div);
+
+            }
+
+            update(){
+                this.div.style.left=`${this.body.position.x -50}px`;
+                this.div.style.top=`${this.body.position.y -100}px`;
+                this.div.style.transform=`rotate(${this.body.angle}rad)`;
+            }
+        }
+
+        function MouseMoved(){
+            if (dist(mouseX, mouseY, lastMouseX, lastMouseY)>10){
+                lastMouseX = mouseX;
+                lastMouseY = mouseY;
+
+                items.forEach((item)=>{
+                    if(dist(mouseX, mouseY, item.body.position.x, item.body.position.y)<150){
+                        let forceMagnitude = 3;
+                        Body.applyForce(
+                            item.body, 
+                            {
+                                x:item.body.position.x,
+                                y: item.body.position.y,
+                            },
+                            {
+                                x: random(-forceMagnitude, forceMagnitude),
+                                y: random(-forceMagnitude, forceMagnitude),
+                            }
+                        );
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html> -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>News Cards Aligned</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column; /* Organizes content vertically */
-        align-items: center; /* Centers content horizontally */
-        padding: 20px;
-        background-color: #f4f4f4;
-        overflow: hidden;
-    }
-    .news-container {
-        display: flex;
-        justify-content: space-around; /* Evenly spaces the cards */
-        flex-wrap: wrap; /* Allows cards to wrap onto the next line */
-        width: 100%; /* Uses full width of the viewport */
-    }
-    .news-header {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-        animation: changeColor 5s infinite alternate;
-    }
-    @keyframes changeColor {
-        0% { color: #7700cc; }
-        50% { color: #d97fce; }
-        100% { color: #7700cc; }
-    }
-    .news-card {
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        width: 280px; /* Fixed width */
-        margin: 20px; /* Spacing between cards */
-        padding: 20px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        opacity: 0;
-        transition: opacity 2s ease-in-out;
-        position: relative;
-    }
-    .news-title {
-        margin: 0;
-        font-size: 18px;
-        color: #333;
-        transition: transform 0.3s ease-in-out;
-    }
-    .news-title:hover {
-        transform: scale(1.1);
-    }
-    .like-button {
-        background-color: #7700cc;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-        margin-top: 10px;
-    }
-    .like-button:hover {
-        transform: scale(1.1);
-    }
-    .like-button:active {
-        transform: scale(0.9);
-    }
-    .thumbs-up {
-        position: absolute;
-        font-size: 24px;
-        opacity: 0;
-        animation: floatUp 4s ease-in-out forwards;
-        top: 50%;
-        left: 50%;
-    }
-    @keyframes floatUp {
-        0% {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(-50%, -150px) scale(0);
-            opacity: 0;
-        }
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Rubik+Pixels&family=Tiny5&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css"/>
+    <title>Document</title>
 </head>
 <body>
+    <div class="header"> 
+        <h1>Pixel Palette</h1>
 
-<h1 class="news-header">This week's specials</h1>
-<div class="news-container">
-    <div class="news-card fade-in">
-        <h2 class="news-title">Local News</h2>
-        <p>Discover the latest happenings in your area with our comprehensive local news coverage.</p>
-        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
     </div>
-
-    <div class="news-card fade-in">
-        <h2 class="news-title">Makeup</h2>
-        <p>Get the latest updates and trends on global beauty events influencing the markets.</p>
-        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
+    <div class="link">
+        <a href="home.html">Go to Homepage</a>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script>
+        const Engine = Matter.Engine;
+        const World = Matter.World;
+        const Bodies = Matter.Bodies;
+        const Body = Matter.Body;
 
-    <div class="news-card fade-in">
-        <h2 class="news-title">Fashion</h2>
-        <p>Explore new fashion innovations and their impact on our daily lives and future.</p>
-        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
-    </div>
+        let engine;
+        let items = [];
+        let lastMouseX = -1;
+        let lastMouseY = -1; 
 
-    <div class="news-card fade-in">
-        <h2 class="news-title">Celebrities Update</h2>
-        <p>Catch up on the latest gossips and highlights from your favorite celebrities and their teams.</p>
-        <button class="like-button" onclick="createFloatingIcon(this)">Like</button>
-    </div>
-</div>
+        function setup() {
+            createCanvas(window.innerWidth, window.innerHeight);
+            engine = Engine.create();
+            engine.world.gravity.y = 0;
 
-<script>
-    window.onload = function() {
-        var cards = document.querySelectorAll('.fade-in');
-        for (var i = 0; i < cards.length; i++) {
-            cards[i].style.opacity = 1;
+            addBoundaries();
+            for (let i = 0; i < 12; i++) {
+                let x = random(100, width - 100);
+                let y = random(100, height - 100);
+                items.push(new Item(x, y, `./images/img${i + 1}.jpg`));
+            }
         }
-    };
 
-    function createFloatingIcon(button) {
-        const icon = document.createElement('div');
-        icon.classList.add('thumbs-up');
-        icon.textContent = '👍';
-        button.parentNode.appendChild(icon);
+        function addBoundaries() {
+            const thickness = 50;
+            World.add(engine.world, [
+                Bodies.rectangle(width/2, -thickness/2, width, thickness, { isStatic: true }),
+                Bodies.rectangle(width/2, height+thickness/2, width, thickness, { isStatic: true }),
+                Bodies.rectangle(-thickness/2, height/2, thickness, height, { isStatic: true }),
+                Bodies.rectangle(width+thickness/2, height/2, thickness, height, { isStatic: true }),
+            ]);
+        }
 
-        setTimeout(() => {
-            button.parentNode.removeChild(icon);
-        }, 4000);
-    }
-</script>
+        function draw() {
+            // background("black");
+            Engine.update(engine);
+            items.forEach((item) => item.update());
+        }
 
+        class Item {
+            constructor(x, y, imagePath) {
+                let options = {
+                    frictionAir: 0.075,
+                    restitution: 0.25,
+                    density: 0.002,
+                    angle: random(TWO_PI), 
+                };
+
+                this.body = Bodies.rectangle(x, y, 100, 200, options);
+                World.add(engine.world, this.body);
+
+                this.div = createDiv();
+                this.div.addClass("item"); 
+                this.div.position(this.body.position.x - 50, this.body.position.y - 100);
+                this.img = createImg(imagePath);
+                this.img.parent(this.div);
+            }
+
+            update() {
+                this.div.position(this.body.position.x - 50, this.body.position.y - 100);
+                this.div.style('transform', `rotate(${this.body.angle}rad)`); 
+            }
+        }
+
+        function mouseMoved() {
+            if (dist(mouseX, mouseY, lastMouseX, lastMouseY) > 10) {
+                lastMouseX = mouseX;
+                lastMouseY = mouseY;
+
+                items.forEach((item) => {
+                    if (dist(mouseX, mouseY, item.body.position.x, item.body.position.y) < 150) {
+                        let forceMagnitude = 3;
+                        Body.applyForce(
+                            item.body, 
+                            { x: item.body.position.x, y: item.body.position.y },
+                            { x: random(-forceMagnitude, forceMagnitude), y: random(-forceMagnitude, forceMagnitude) }
+                        );
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
-
