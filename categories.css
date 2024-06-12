@@ -34,8 +34,17 @@ nav{
 }
 
 nav p, footer p{
-    color: #fff;
-    font-size: 12px;
+        /* font-family: "Tiny5", sans-serif; */
+        font-family: "DM Serif Display", serif;
+        
+        /* font-weight: 500; */
+        font-weight: 400;
+        font-style: normal;
+        /* letter-spacing: -0.05em;
+        line-height: 175%; */
+        color: #CABA9C;
+        text-align: center;
+    
 }
 
 nav > div{
