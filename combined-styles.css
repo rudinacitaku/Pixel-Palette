@@ -1,0 +1,284 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: "PP Fraktion Mono", "Neue Montreal";
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #cdc6be;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blocks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#blocks {
+    background-color: #3e5236; /* #131313; */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    overflow: hidden;
+    z-index: 10000;
+}
+
+.block {
+    width: 50px;
+    height: 50px;
+    border: 0.5px solid rgba(255, 255, 255, 0.075);
+    transition: border-color 0.3s ease;
+}
+
+.highlight {
+    border-color: #c28e4c; /* #ebfb1d;*/
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.images {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(24, 1fr); 
+    gap: 5em 2em;
+    width: 80%;
+    margin: 7em auto;
+}
+
+.images .col {
+    display: contents; /* This allows us to apply the grid layout directly to the images inside the .col */
+}
+
+.img {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #c5b6af;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+}
+
+/* Positioning the images */
+.img:nth-child(1) {
+    grid-column: 2 / 6;
+    grid-row: 1 / 6;
+}
+
+.img:nth-child(2) {
+    grid-column: 7 / 11;
+    grid-row: 4 / 9; 
+}
+
+.img:nth-child(3) {
+    grid-column: 2 / 6;
+    grid-row: 7 / 12; 
+}
+
+.img:nth-child(4) {
+    grid-column: 7 / 11;
+    grid-row: 10 / 15; 
+}
+
+.img:nth-child(5) {
+    grid-column: 2 / 6;
+    grid-row: 13 / 18; 
+}
+
+.img:nth-child(6) {
+    grid-column: 7 / 11;
+    grid-row: 16 / 21; 
+}
+
+.website-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: #cdc6be;
+    padding: 2em;
+}
+
+.hero-img {
+    margin-top: 4em;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #141412;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #cdc6be;
+    mix-blend-mode: difference;
+    z-index: 2;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 27px;
+    color: #c5b6af;
+    text-transform: uppercase;
+}
+
+nav > div {
+    flex: 1;
+}
+
+.logo {
+    text-align: center;
+    font-family: "Canopee";
+}
+
+.logo a {
+    text-decoration: none;
+    font-size: 30px;
+    color: #cdc6be;
+}
+
+nav a.right {
+    margin-left: auto;
+}
+
+.toggle-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.burger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.7em 2em 1.5em 2em;
+    background: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+    width: 28px;
+    height: 20px;
+    transition: all 250ms ease-out;
+    cursor: pointer;
+}
+
+.burger:before,
+.burger:after {
+    content: "";
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    background: #cdc6be;
+    transition: all 250ms ease-out;
+    will-change: transform;
+}
+
+.burger:before {
+    transform: translateY(-3px);
+}
+
+.burger:after {
+    transform: translateY(3px);
+}
+
+.active.burger:before {
+    transform: translateY(0) rotate(45deg);
+}
+
+.active.burger:after {
+    transform: translateY(0) rotate(-45deg);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background: #141412;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); 
+    will-change: transform;
+}
+
+
+.overlay-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-item {
+    display: flex;
+    cursor: pointer;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.menu-item p {
+    position: relative;
+    text-align: center;
+    font-family: "Canopee";
+    font-size: 7vw;
+    line-height: 80%;
+    will-change: transform;
+    transition: letter-spacing 0.3s;
+}
+
+.menu-item p:hover {
+    letter-spacing: 0.075em;
+}
+
+.menu-item p#active::after {
+    content: "";
+    position: absolute;
+    top: 45%;
+    left: 0;
+    transform: translateY(-50%);
+    background: #c03f13;
+    width: 0%;
+    height: 12px;
+    transition: width 1s ease;
+}
+
+@media(max-width: 900px) {
+    .logo a {
+        font-size: 20px;
+    }
+}
