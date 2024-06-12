@@ -1,18 +1,23 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let lottieContainer = document.querySelectorAll(".animation");
+    let lottieContainers = document.querySelectorAll(".animation");
 
-    if (lottieContainer) {
-        LottieScrollTrigger({
-            trigger: ".animation",
-            start: "top center",
-            endTrigger: ".end-lottie",
-            end: `bottom center +=${document.querySelector(".animation").offsetHeight}`,
-            renderer: "svg",
-            target: ".animation",
-            path: "/lotties/skincare.json",
-            scrub: 2,
+    if (lottieContainers.length > 0) {
+        lottieContainers.forEach(container => {
+            let path = container.getAttribute('data-path');
+            let endTrigger = container.nextElementSibling;
+
+            LottieScrollTrigger({
+                trigger: container,
+                start: "top center",
+                endTrigger: endTrigger,
+                end: `bottom center +=${container.offsetHeight}`,
+                renderer: "svg",
+                target: container,
+                path: path,
+                scrub: 2,
+            });
         });
     }
 });
