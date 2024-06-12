@@ -120,7 +120,7 @@ nav > div {
     height: 100vh;
     display: flex;
     background: #141412;
-    /* clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); */
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); 
     will-change: transform;
 }
 
@@ -140,14 +140,14 @@ nav > div {
 .menu-item {
     display: flex;
     cursor: pointer;
-    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
 
 .menu-item p {
     position: relative;
     text-align: center;
     font-family: "Canopee";
-    font-size: 15vw;
+    font-size: 7vw;
     line-height: 80%;
     will-change: transform;
     transition: letter-spacing 0.3s;
@@ -166,22 +166,7 @@ nav > div {
     background: #c03f13;
     width: 0%;
     height: 12px;
-}
-
-.sub-nav {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.5em;
-    opacity: 0;
-}
-
-.sub-nav p {
-    font-family: "Canopee";
-    font-size: 20px;
-    color: #cdc6be;
+    transition: width 1s ease;
 }
 
 @media(max-width: 900px) {
