@@ -330,18 +330,18 @@ function setup(loader, resources) {
       shockwaveFilter.wavelength = 300;
       switch (currentCountry) {
         case 1:
-          country.innerHTML = "Maldives";
+          country.innerHTML = "Mission";
           break;
         case 2:
-          country.innerHTML = "Turkey";
+          country.innerHTML = "Vision";
           app.ticker.add(slide1To2);
           break;
         case 3:
-          country.innerHTML = "Seychelles";
+          country.innerHTML = "Team";
           app.ticker.add(slide2To3);
           break;
         case 4:
-          country.innerHTML = "Italy";
+          country.innerHTML = "Audience";
           app.ticker.add(slide3To4);
       }
 
@@ -368,19 +368,19 @@ function setup(loader, resources) {
       shockwaveFilter.wavelength = 300;
       switch (currentCountry) {
         case 1:
-          country.innerHTML = "Maldives";
+          country.innerHTML = "Mission";
           app.ticker.add(slide2To1);
           break;
         case 2:
-          country.innerHTML = "Turkey";
+          country.innerHTML = "Vision";
           app.ticker.add(slide3To2);
           break;
         case 3:
-          country.innerHTML = "Seychelles";
+          country.innerHTML = "Team";
           app.ticker.add(slide4To3);
           break;
         case 4:
-          country.innerHTML = "Italy";
+          country.innerHTML = "Audience";
       }
 
       function slide4To3() {
