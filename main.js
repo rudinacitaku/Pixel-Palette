@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function(){
     items.forEach((item, index) => {
         item.addEventListener("mouseenter", () => {
             isMouseOverItem = true;
-            const newBg = `./images/bg-${index + 1}.jpg`;
+            const newBg = `./images/bg${index + 1}.jpg`;
             changeBg(newBg);
 
             const newActivePreview = document.querySelector(`.preview-${index + 1}`);
