@@ -104,6 +104,14 @@ footer{
     cursor:pointer;
 }
 
+.custom-link {
+    text-decoration: none; /* Removes the underline */
+    color: inherit; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 18px; /* Example font size */
+    font-weight: bold; /* Example font weight */
+    transition: color 0.3s; 
+}
 .item p{
     color: #fff;
     padding: 6px 12px;
