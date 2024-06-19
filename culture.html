@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion</title>
     <link rel="stylesheet" href="categorystyles.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.8/browser/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 </head>
 <body>
     <nav>
@@ -22,44 +24,104 @@
         <div class="end-lottie"></div>
 
         <h1>Culture, Art, History and Society</h1>
-        <p>Lorem ipsum</p>
-    </section>
-
-    <div class="container">
-        <div class="box">
-          <span class="title">Skin Care</span>
-          <div>
-            <strong>Products</strong>
-            <p>Dive into the skincare world</p>
-            <span>VALID</span> <span>06/12</span>
-          </div>
-        </div>
-        <div class="box">
-            <span class="title">Skin Care</span>
+        
+        <div class="container">
+          <div class="box">
             <div>
-              <strong>Products</strong>
-              <p>Dive into the skincare world</p>
-              <span>VALID</span> <span>06/12</span>
-            </div>
-        </div>
-        <div class="box">
-            <span class="title">Skin Care</span>
-            <div>
-              <strong>Products</strong>
-              <p>Dive into the skincare world</p>
-              <span>VALID</span> <span>06/12</span>
+              <img src="https://govt.chinadaily.com.cn/images/202305/06/6455f35c498ea27454cd87a5.jpeg" alt="Skin Care" class="card-image">
+              <strong>Renaissance Art</strong>
+              <p>Explore the beauty and creativity of Renaissance art.</p>
+              
             </div>
           </div>
           <div class="box">
-              <span class="title">Skin Care</span>
-              <div>
-                <strong>Products</strong>
-                <p>Dive into the skincare world</p>
-                <span>VALID</span> <span>06/12</span>
-              </div>
+            <div>
+              <img src="https://mightywonders.coffee/wp-content/uploads/sites/11/2024/03/matcha-tea.jpg" alt="Skin Care" class="card-image">
+              <strong>Japanese Tea Ceremony</strong>
+              <p>A ritual steeped in history and cultural significance.</p>
+            </div>
+          </div><div class="box">
+            <div>
+              <img src="https://www.hepsiemlak.com/emlak-yasam/wp-content/uploads/2023/01/Where-Do-Foreigners-Prefer-To-Live-In-Turkey.jpg" alt="Skin Care" class="card-image">
+              <strong>Istanbul: Bridge Between East and West</strong>
+              <p>Where East meets West in a fusion of cultures and histories.</p>
+            </div>
           </div>
-        
-      </div>
+        </div>
+        <div class="container">
+          <div class="box">
+            <div>
+              <img src="https://govt.chinadaily.com.cn/images/202305/06/6455f35c498ea27454cd87a5.jpeg" alt="Skin Care" class="card-image">
+              <strong>Renaissance Art</strong>
+              <p>Explore the beauty and creativity of Renaissance art.</p>
+              
+            </div>
+          </div>
+          <div class="box">
+            <div>
+              <img src="https://mightywonders.coffee/wp-content/uploads/sites/11/2024/03/matcha-tea.jpg" alt="Skin Care" class="card-image">
+              <strong>Japanese Tea Ceremony</strong>
+              <p>A ritual steeped in history and cultural significance.</p>
+            </div>
+          </div><div class="box">
+            <div>
+              <img src="https://www.hepsiemlak.com/emlak-yasam/wp-content/uploads/2023/01/Where-Do-Foreigners-Prefer-To-Live-In-Turkey.jpg" alt="Skin Care" class="card-image">
+              <strong>Istanbul: Bridge Between East and West</strong>
+              <p>Where East meets West in a fusion of cultures and histories.</p>
+            </div>
+          </div>
+        </div>
+
+    </section>
+
+    <script type="text/javascript">
+      
+      let app = new PIXI.Application({ width: window.innerWidth, height: window.innerHeight });
+      document.body.appendChild(app.view);
+
+      
+      app.stage.interactive = true;
+
+      
+      app.loader
+          .add('ripple', 'ripple.png')
+          .add('bg', 'wave.png')
+          .load(setup);
+
+      function setup() {
+          
+          let bg = new PIXI.Sprite(app.loader.resources.bg.texture);
+          bg.width = app.renderer.width;
+          bg.height = app.renderer.height;
+          app.stage.addChild(bg);
+
+          
+          let displacementSprite = new PIXI.Sprite(app.loader.resources.ripple.texture);
+          displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
+          displacementSprite.anchor.set(0.5);
+          displacementSprite.x = app.renderer.width / 2;
+          displacementSprite.y = app.renderer.height / 2;
+          app.stage.addChild(displacementSprite);
+
+          
+          let displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
+          displacementSprite.scale.set(2);
+          app.stage.filters = [displacementFilter];
+
+          
+          app.ticker.add(() => {
+              displacementSprite.x += 1;
+              displacementSprite.y += 1;
+          });
+
+          
+          app.stage.on('pointermove', (event) => {
+              displacementFilter.scale.x = (event.data.global.x - app.renderer.width / 2) / 20;
+              displacementFilter.scale.y = (event.data.global.y - app.renderer.height / 2) / 20;
+          });
+      }
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.10/lottie.min.js"></script>
